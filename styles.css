@@ -2,3 +2,7 @@
 .winner {
 	background-color: red;
 }
+
+.hidden {
+	display: none;
+}
