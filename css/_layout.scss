@@ -4,11 +4,16 @@
 	box-shadow: 0 0 10px 10px grey;
 }
 
-.draw {
+.draw-list section, .final-list {
 	padding: 2em;
-	display: inline-block;
-	// display: flex;
-	// flex-direction: row;
-	// flex-wrap: wrap;
-	// justify-content: space-around;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
 }
+
+div {
+	margin-top: 10px;
+}
+
+

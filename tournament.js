@@ -36,34 +36,38 @@ let randomisePlayers = (input, length) => {
 
 // Print the draw
 let printDraw = (players) => {
-	let numPlayers = players.length;
-	let matchNum = 1;
-	players.map((player, index) => {
-		if (index % 2 === 0) {
-			let h3 = d.createElement("h3");
-			h3.textContent = "Match " + matchNum;
-			drawList.appendChild(h3);
-			p = d.createElement("p");
-			p.textContent = player.name;
-			drawList.appendChild(p);
-			matchNum += 1;
-		} else {
-			p = d.createElement("p");
-			p.textContent = " plays "
-			drawList.appendChild(p);
-			p = d.createElement("p");
-			p.textContent = player.name;
-			drawList.appendChild(p);
-		} 
+	let section = d.createElement("section");
 
-		// Reset player
-		player.isWinner = false;
-	});
+	// Create the match pairings
+	let pairs = [];
+	for (let i = 0; i < players.length; i+=2) {
+		(players[i+1]) ? pairs.push({player1: players[i].name, player2: players[i+1].name}) : pairs.push({player1: players[i].name, player2: "BYE"});
+	}
 
-	if (numPlayers % 2 === 1) {
+	// Print the matches
+	pairs.map((match, index) => {
+		console.log("pairs", pairs);
+		console.log("players", players);
+		let div = d.createElement("div");
+		let h3 = d.createElement("h3");
+		h3.textContent = "Match " + (index + 1);
+		div.appendChild(h3);
+		let p = d.createElement("p");
+		p.textContent = match.player1;
+		(match.player2 === "BYE") ? p.classList.add("winner-highlight") : null;
+		div.appendChild(p);
 		p = d.createElement("p");
-		p.textContent = "has a BYE";
-		drawList.appendChild(p);
+		p.textContent = "vs";
+		div.appendChild(p);
+		p = d.createElement("p");
+		p.textContent = match.player2;
+		div.appendChild(p);
+		section.appendChild(div);
+	});
+	drawList.appendChild(section);
+	players.map(player => player.isWinner = false);
+	if (players.length % 2 === 1) {
+		players[players.length-1].isWinner = true;
 	}
 }
 
@@ -73,22 +77,20 @@ let createTournament = () => {
 	if (players.length <= 2) {
 		printFinal(players);
 	} else {
-		let playersCopy = players.slice();
-		players = randomisePlayers(playersCopy, players.length);
+		// let playersCopy = players.slice();
+		players = randomisePlayers(players, players.length);
+		console.log(players);
 		d.getElementById("draw").classList.remove("hidden");
 		printDraw(players);
+		roundButton.classList.remove("hidden");
 	}
 }
 
 // Mark a player as the winner
 let winnerClicked = e => {
 	let winner = e.target;
-	winner.style.border = "2px solid red";
+	winner.classList.add("winner-highlight");
 	players.map(player => (player.name == winner.textContent) ? player.isWinner = !player.isWinner : player);
-	if (players.length % 2 === 1) {
-		players[players.length-1].isWinner = true;
-	}
-	console.log(players);
 }
 
 // Generate the next round from the players where isWinner is true
@@ -103,6 +105,7 @@ let roundClicked = () => {
 
 // Print final if only two players left
 	if (winners.length <= 2) {
+		roundButton.classList.add("hidden");
 		printFinal(winners);
 
 // Otherwise generate the next round
@@ -110,21 +113,33 @@ let roundClicked = () => {
 		let h2 = d.createElement("h2");
 		h2.textContent = "Next round";
 		drawList.appendChild(h2);
+		winners = randomisePlayers(winners, winners.length);
 		printDraw(winners);
+		roundButton.classList.remove("hidden");
 	}
 }
 
 let printFinal = (winners) => {
 	final.classList.remove("hidden");
-	d.getElementById("final-list").textContent = winners[0].name + " vs " + winners[1].name;
+	let div = d.createElement("div");
+	let p = d.createElement("p");
+	p.textContent = winners[0].name + " vs " + winners[1].name;
+	div.appendChild(p);
+	d.getElementById("final-list").appendChild(div);
+	// d.getElementById("final-list").textContent = winners[0].name + " vs " + winners[1].name;
 }
 
+// Reset values
 let newTournament = () => {
 	d.getElementById("add-players").classList.remove("hidden");
 	d.getElementById("final").classList.add("hidden");
 	d.getElementById("draw").classList.add("hidden");
 	players = [];
+	winners = [];
+	pairs = [];
 	output.textContent = "";
+	drawList.textContent = "";
+	d.getElementById("final-list").textContent = "";
 }
 
 d.getElementById("button").addEventListener("click", submitPlayerClicked);

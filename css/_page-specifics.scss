@@ -33,6 +33,11 @@ button {
 
 button:hover {
 	background-color: $orange;
+}
 
+.draw-list div, .final-list div {
+	padding: 1em 2em;
+	box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+	border-top: 5px solid $dark-grey;
 }
 
