@@ -3,6 +3,7 @@
 let input = d.getElementById("input");
 let output = d.getElementById("players-list");
 let draw = d.getElementById("draw");
+let drawList = d.getElementById("draw-list");
 let drawTitle = d.getElementById("draw-title");
 let roundButton = d.getElementById("round-button");
 let final = d.getElementById("final");
@@ -41,18 +42,18 @@ let printDraw = (players) => {
 		if (index % 2 === 0) {
 			let h3 = d.createElement("h3");
 			h3.textContent = "Match " + matchNum;
-			draw.appendChild(h3);
+			drawList.appendChild(h3);
 			p = d.createElement("p");
 			p.textContent = player.name;
-			draw.appendChild(p);
+			drawList.appendChild(p);
 			matchNum += 1;
 		} else {
 			p = d.createElement("p");
 			p.textContent = " plays "
-			draw.appendChild(p);
+			drawList.appendChild(p);
 			p = d.createElement("p");
 			p.textContent = player.name;
-			draw.appendChild(p);
+			drawList.appendChild(p);
 		} 
 
 		// Reset player
@@ -62,19 +63,21 @@ let printDraw = (players) => {
 	if (numPlayers % 2 === 1) {
 		p = d.createElement("p");
 		p.textContent = "has a BYE";
-		draw.appendChild(p);
+		drawList.appendChild(p);
 	}
 }
 
 // Create the initial Tournament draw
 let createTournament = () => {
-	let playersCopy = players.slice();
-	players = randomisePlayers(playersCopy, players.length);
-	let h2 = d.createElement("h2");
-	h2.textContent = "Tournament draw";
-	draw.appendChild(h2);
-	printDraw(players);
 	d.getElementById("add-players").classList.add("hidden");
+	if (players.length <= 2) {
+		printFinal(players);
+	} else {
+		let playersCopy = players.slice();
+		players = randomisePlayers(playersCopy, players.length);
+		d.getElementById("draw").classList.remove("hidden");
+		printDraw(players);
+	}
 }
 
 // Mark a player as the winner
@@ -100,24 +103,34 @@ let roundClicked = () => {
 
 // Print final if only two players left
 	if (winners.length <= 2) {
-		final.classList.remove("hidden");
-		let p = d.createElement("p");
-		p.textContent = winners[0].name + " vs " + winners[1].name;
-		final.appendChild(p);
-		return;
+		printFinal(winners);
 
 // Otherwise generate the next round
 	} else {
 		let h2 = d.createElement("h2");
 		h2.textContent = "Next round";
-		draw.appendChild(h2);
+		drawList.appendChild(h2);
 		printDraw(winners);
 	}
 }
 
+let printFinal = (winners) => {
+	final.classList.remove("hidden");
+	d.getElementById("final-list").textContent = winners[0].name + " vs " + winners[1].name;
+}
+
+let newTournament = () => {
+	d.getElementById("add-players").classList.remove("hidden");
+	d.getElementById("final").classList.add("hidden");
+	d.getElementById("draw").classList.add("hidden");
+	players = [];
+	output.textContent = "";
+}
+
 d.getElementById("button").addEventListener("click", submitPlayerClicked);
 d.getElementById("create-tournament").addEventListener("click", createTournament);
-draw.addEventListener("click", winnerClicked);
+drawList.addEventListener("click", winnerClicked);
 roundButton.addEventListener("click", roundClicked);
+d.getElementById("new-tournament").addEventListener("click", newTournament);
 
 })(document);

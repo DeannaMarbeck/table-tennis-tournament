@@ -1,34 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-gb">
 <head>
-	<link rel="stylesheet" type="text/css" href="styles.css">
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie-edge">
 	<title>Table Tennis Tournament</title>
+	<meta name="description" content="Table Tennis Tournament Draw Generator">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="manifest" href="site.webmanifest">
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 </head>
 <body>
+	<div class="wrapper">
 
-	<h1 class="test">Table Tennis Tournament</h1>
-	<section id="add-players" class="add-players">
+		<h1 class="test">Table Tennis Tournament</h1>
+		<section id="add-players" class="add-players">
+			<h2>Add players for a random tournament draw</h2>
+			<p>You can enter any number of players, but an odd number will result in a lucky player receiving a bye through to the next round.</p>
+			<label for="input">Player Name:</label>
+			<input type="text" id="input" />
+			<button id="button">Add Player</button>
 
-		<input type="text" id="input" />
-		<button id="button">Add Player</button>
+			<ul id="players-list"></ul>
+			<button id="create-tournament">Create Tournament</button>
+		</section>
 
-		<ul id="players-list">
-		</ul>
-		<button id="create-tournament">Create Tournament</button>
-	</section>
+		<section id="draw" class="hidden">
+			<h2>Tournament Draw</h2>
+			<h3 id="draw-error"></h3>
+			<section id="draw-list"></section>
+			<button id="round-button">Next round</button>
+		</section>
 
-	<section id="draw">
-		<h3 id="draw-error"></h3>
-	</section>
+		<section>
+		</section>
 
-	<section>
-		<button id="round-button">Next round</button>
-	</section>
-
-	<section id="final" class="hidden">
-		<h2>Final round. Congratulations</h2>
-	</section>
-
-	<script type="text/javascript" src="tournament.js"></script>
+		<section id="final" class="hidden">
+			<h2>Final!</h2>
+			<section id="final-list"></section>
+			<button id="new-tournament">New Tournament</button>
+		</section>
+		<script type="text/javascript" src="tournament.js"></script>
+	</div>
 </body>
 </html>

@@ -1,0 +1,37 @@
+$text-heading-color: #E7F4F6;
+$text-body-color: #222424;
+$contrast-background-color: white;
+$ball-colour: #f49b42;
+
+$dark-grey: $text-body-color;
+$cream: $text-heading-color;
+$white: $contrast-background-color;
+$orange: $ball-colour;
+
+body {
+	font-family: Garamond, sans-serif;
+	font-size: 100%;
+	line-height: 1.5;
+	text-align: center;
+}
+
+h1, h2, h3, p {
+	text-align: center;
+}
+
+h2, h3, p {
+	color: dark-grey;
+}
+
+h1 {
+	color: $cream;
+	font-size: 4em;
+}
+
+h2 {
+	font-size: 2em;
+}
+
+h3 {
+	font-size: 1.5em;
+}
