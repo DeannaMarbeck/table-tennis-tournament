@@ -1,46 +1,51 @@
 <!DOCTYPE html>
 <html lang="en-gb">
+
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="x-ua-compatible" content="ie-edge">
 	<title>Table Tennis Tournament</title>
 	<meta name="description" content="Table Tennis Tournament Draw Generator">
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie-edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="manifest" href="site.webmanifest">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<link rel="icon" type="image/x-icon" href="images/favicon.ico">
 </head>
+
 <body>
 	<div class="wrapper">
+		<h1>Table Tennis Tournament</h1>
 
-		<h1 class="test">Table Tennis Tournament</h1>
+		<!-- Enter tournament players -->
 		<section id="add-players" class="add-players">
-			<h2>Add players for a random tournament draw</h2>
-			<p>Enter any number of players. An odd number will result in a lucky player receiving a bye through to the next round.</p>
+			<h2>Add players to create a random draw for your tournament</h2>
 			<label for="input">Player Name:</label>
 			<input type="text" id="input" />
-			<button id="button">Add Player</button>
+			<button id="input-button">Add Player</button>
 			<p id="input-error"></p>
-
 			<ul id="players-list"></ul>
 			<button id="create-tournament">Create Tournament</button>
 		</section>
 
+		<!-- Display draws for each round -->
 		<section id="draw" class="hidden">
 			<h2>Tournament Draw</h2>
 			<section id="draw-list" class="draw-list"></section>
-			<section id="round-text">
+			<section id="next-round">
 				<h3 id="draw-error">Select the winners to progress to the next round</h3>
 				<button id="round-button">Next round</button>
 			</section>
 		</section>
 
+		<!-- Display final match -->
 		<section id="final" class="hidden">
 			<h2>Final!</h2>
 			<section id="final-list" class="final-list"></section>
-			<button id="new-tournament">New Tournament</button>
+			<button id="new-button">New Tournament</button>
 		</section>
+
 		<script type="text/javascript" src="tournament.js"></script>
-	</div>
+	</div> <!-- End wrapper div -->
 </body>
 </html>

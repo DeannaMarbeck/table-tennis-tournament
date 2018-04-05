@@ -1,31 +1,33 @@
 $text-heading-color: #E7F4F6;
 $text-body-color: #222424;
-$contrast-background-color: white;
-$ball-colour: #f49b42;
+$background: #fdfffc;
+$button-colour: #efbd7f;
+$highlight: #f49b42;
 
-$dark-grey: $text-body-color;
 $cream: $text-heading-color;
-$white: $contrast-background-color;
-$orange: $ball-colour;
+$dark-grey: $text-body-color;
+$pale-green: $background;
+$pale-orange: $button-colour;
+$dark-orange: $highlight;
+
+.wrapper {
+	background-color: $pale-green;
+}
 
 body {
-	font-family: Garamond, sans-serif;
+	font-family: 'Nunito', sans-serif;
 	font-size: 100%;
 	line-height: 1.5;
 	text-align: center;
 }
 
-h1, h2, h3, p {
-	text-align: center;
+h1 {
+	color: $cream;
+	font-size: 3.8em;
 }
 
 h2, h3, p {
-	color: dark-grey;
-}
-
-h1 {
-	color: $cream;
-	font-size: 4em;
+	color: $dark-grey;
 }
 
 h2 {
@@ -37,6 +39,6 @@ h3 {
 	font-size: 1.5em;
 }
 
-.winner-highlight {
-	background-color: $orange;
+button, input {
+	font-size: 100%;
 }
