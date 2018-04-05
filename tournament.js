@@ -7,19 +7,39 @@ let drawList = d.getElementById("draw-list");
 let drawTitle = d.getElementById("draw-title");
 let roundButton = d.getElementById("round-button");
 let final = d.getElementById("final");
+let roundText = d.getElementById("round-text");
+let inputError = d.getElementById("input-error");
 
 let players = [];
+let pairs = [];
 
 // Gather form input and add names to players array
 let submitPlayerClicked = () => {
+	inputError.textContent = "";
 	let name = input.value;
-	players.push({name: name, isWinner: false});
 
-// Output list of players
-	let li = d.createElement("li");
-	li.textContent = name;
-	output.appendChild(li);
-	input.value = "";
+	// Validate input
+	if (name.length < 1) {
+		inputError.textContent = "Please enter the player's name";
+	} else {
+		let exists = false;
+		players.map(player => {
+			if (player.name === name) {
+				inputError.textContent = "This player is already in the tournament, please use a different name";
+				exists = true;
+			}
+		});
+
+		if (!exists) {
+			players.push({name: name, isWinner: false});
+
+		// Output list of players
+			let li = d.createElement("li");
+			li.textContent = name;
+			output.appendChild(li);
+			input.value = "";
+		}
+	}
 	input.focus();
 }
 
@@ -39,7 +59,7 @@ let printDraw = (players) => {
 	let section = d.createElement("section");
 
 	// Create the match pairings
-	let pairs = [];
+	pairs = [];
 	for (let i = 0; i < players.length; i+=2) {
 		(players[i+1]) ? pairs.push({player1: players[i].name, player2: players[i+1].name}) : pairs.push({player1: players[i].name, player2: "BYE"});
 	}
@@ -82,40 +102,73 @@ let createTournament = () => {
 		console.log(players);
 		d.getElementById("draw").classList.remove("hidden");
 		printDraw(players);
-		roundButton.classList.remove("hidden");
+		roundText.classList.remove("hidden");
 	}
 }
 
 // Mark a player as the winner
 let winnerClicked = e => {
 	let winner = e.target;
+	let winnerName = winner.textContent;
+
+	let validPlayer = players.filter(player => player.name === winnerName);
+	console.log(validPlayer);
+	if (validPlayer.length === 0) {
+    	return;  
+	}
+
+	// Get loser name and DOM location from the clicked element
+	let loserName = "";
+	let domDirection = "next";
+	pairs.map(pair => {
+		if (pair.player1 === winnerName) {
+			loserName = pair.player2;
+
+		} else if (pair.player2 === winnerName) {
+			loserName = pair.player1;
+			domDirection = "previous";
+		}		
+	});
+	players.map(player => {
+		if (player.name === winnerName) {
+			player.isWinner = true;
+		}
+		if (player.name === loserName) {
+			player.isWinner = false;
+		}
+	});
 	winner.classList.add("winner-highlight");
-	players.map(player => (player.name == winner.textContent) ? player.isWinner = !player.isWinner : player);
+	// winner.domDirection.domDirection.classList.remove("winner-highlight");
+	domDirection === "next" ? winner.nextElementSibling.nextElementSibling.classList.remove("winner-highlight") : winner.previousElementSibling.previousElementSibling.classList.remove("winner-highlight");
+
+	console.log(players);
 }
 
 // Generate the next round from the players where isWinner is true
 let roundClicked = () => {
 	let winners = players.filter(player => player.isWinner);
 
-// Check winners are selected
-// 	if (winners.length < players.length / 2) {
-// 		d.getElementById("draw-error").textContent = "Please select the winners";
+// Check correct number of winners are selected
+	if (winners.length < pairs.length) {
+		d.getElementById("draw-error").textContent = "Please select a winner for each match";
 
-// 	} else 
+	} else 
 
 // Print final if only two players left
 	if (winners.length <= 2) {
-		roundButton.classList.add("hidden");
+		d.getElementById("round-text").classList.add("hidden");
 		printFinal(winners);
 
 // Otherwise generate the next round
 	} else {
 		let h2 = d.createElement("h2");
 		h2.textContent = "Next round";
+		d.getElementById("draw-error").textContent = "";
+
 		drawList.appendChild(h2);
 		winners = randomisePlayers(winners, winners.length);
 		printDraw(winners);
-		roundButton.classList.remove("hidden");
+		roundText.classList.remove("hidden");
 	}
 }
 
@@ -126,7 +179,6 @@ let printFinal = (winners) => {
 	p.textContent = winners[0].name + " vs " + winners[1].name;
 	div.appendChild(p);
 	d.getElementById("final-list").appendChild(div);
-	// d.getElementById("final-list").textContent = winners[0].name + " vs " + winners[1].name;
 }
 
 // Reset values
@@ -139,7 +191,9 @@ let newTournament = () => {
 	pairs = [];
 	output.textContent = "";
 	drawList.textContent = "";
+	inputError.textContent = "";
 	d.getElementById("final-list").textContent = "";
+	console.log(players);
 }
 
 d.getElementById("button").addEventListener("click", submitPlayerClicked);

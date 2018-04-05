@@ -16,10 +16,11 @@
 		<h1 class="test">Table Tennis Tournament</h1>
 		<section id="add-players" class="add-players">
 			<h2>Add players for a random tournament draw</h2>
-			<p>You can enter any number of players, but an odd number will result in a lucky player receiving a bye through to the next round.</p>
+			<p>Enter any number of players. An odd number will result in a lucky player receiving a bye through to the next round.</p>
 			<label for="input">Player Name:</label>
 			<input type="text" id="input" />
 			<button id="button">Add Player</button>
+			<p id="input-error"></p>
 
 			<ul id="players-list"></ul>
 			<button id="create-tournament">Create Tournament</button>
@@ -27,10 +28,11 @@
 
 		<section id="draw" class="hidden">
 			<h2>Tournament Draw</h2>
-			<p>Select the winners to progress to the next round</p>
-			<h3 id="draw-error"></h3>
 			<section id="draw-list" class="draw-list"></section>
-			<button id="round-button">Next round</button>
+			<section id="round-text">
+				<h3 id="draw-error">Select the winners to progress to the next round</h3>
+				<button id="round-button">Next round</button>
+			</section>
 		</section>
 
 		<section id="final" class="hidden">
