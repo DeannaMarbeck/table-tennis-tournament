@@ -1,3 +1,5 @@
+// Set up colours
+
 $text-heading-color: #E7F4F6;
 $text-body-color: #222424;
 $background: #fdfffc;
@@ -10,6 +12,7 @@ $pale-green: $background;
 $pale-orange: $button-colour;
 $dark-orange: $highlight;
 
+// Font sizes and colours
 .wrapper {
 	background-color: $pale-green;
 }
@@ -26,11 +29,11 @@ h1 {
 	font-size: 3.8em;
 }
 
-h2, h3, p {
+h2, legend, h3, p {
 	color: $dark-grey;
 }
 
-h2 {
+h2, legend {
 	font-size: 2em;
 	margin-top: 1em;
 }

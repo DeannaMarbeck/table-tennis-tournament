@@ -42,7 +42,7 @@ class Tournament {
 	generateFinal() {
 		// Return the finalists
 		let finalPlayers = this.players.filter(player => player.isWinner === true);
-		finalPlayers = finalPlayers[0].name + " vs " + finalPlayers[1].name;
+		finalPlayers = finalPlayers[0].name + " meets " + finalPlayers[1].name;
 		return finalPlayers;
 	}
 
@@ -177,7 +177,8 @@ let finalList = d.getElementById("final-list");
 let tournament = new Tournament();
 
 // Gather user input and add names to players array
-let addPlayerClicked = () => {
+let addPlayerClicked = (e) => {
+	e.preventDefault();
 	inputError.textContent = "";
 	let name = input.value;
 
@@ -274,6 +275,9 @@ let roundClicked = () => {
 let printFinal = (finalists) => {
 	final.classList.remove("hidden");
 	let div = d.createElement("div");
+	let h3 = d.createElement("h3");
+	h3.textContent = "Final";
+	div.appendChild(h3);
 	let p = d.createElement("p");
 	p.textContent = finalists;
 	div.appendChild(p);

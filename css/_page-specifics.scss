@@ -10,32 +10,60 @@ h1 {
 	padding: 50px 0;
 }
 
+// Button and input styles
 input, button {
 	border-radius: 5px;
 	margin: 20px 0;
 	padding: 5px;
 }
 
-input {
+input[type="text"] {
 	width: 15em;
 }
 
-button {
+button, input[type="submit"] {
 	background-color: $pale-orange;
 	&:hover {
 		background-color: $dark-orange;		
 	}
 }
 
+.add-players {
+	padding: 1em;
+	margin-top: 1em;
+}
+
+// Match styles
 .draw-list div, .final-list div {
 	padding: 1em 2em;
 	box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
 	border-top: 5px solid $dark-grey;
 	background-color: #FFF;
-	margin-top: 10px;
+	margin: 10px;
+}
+
+.draw-list div p {
+	cursor: pointer;
+}
+
+.final-list div {
+	font-size: 1.3em;
+	animation-duration: 2s;
+	animation-name: final-animation;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
 }
 
 .winner-highlight {
 	background-color: $dark-orange;
+}
+
+@keyframes final-animation {
+  100% {
+    transform: scale(1.05);
+  }
+  0% {
+    transform: scale(1);
+  }
 }
 

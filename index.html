@@ -5,7 +5,7 @@
 	<title>Table Tennis Tournament</title>
 	<meta name="description" content="Table Tennis Tournament Draw Generator">
 	<meta charset="utf-8">
-	<meta http-equiv="x-ua-compatible" content="ie-edge">
+	<meta http-equiv="x-ua-compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="manifest" href="site.webmanifest">
 	<link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -20,10 +20,16 @@
 
 		<!-- Enter tournament players -->
 		<section id="add-players" class="add-players">
-			<h2>Add players to create a random draw for your tournament</h2>
-			<label for="input">Player Name:</label>
-			<input type="text" id="input" />
-			<button id="input-button">Add Player</button>
+			<form>
+				<fieldset>
+					<legend>Add players to create a random draw for your tournament</legend>	
+					<div>
+						<label for="input">Player Name:</label>
+						<input type="text" id="input" />
+						<input type="submit" id="input-button" value="Add Player" />
+					</div>
+				</fieldset>
+			</form>
 			<p id="input-error"></p>
 			<ul id="players-list"></ul>
 			<button id="create-tournament">Create Tournament</button>
@@ -41,12 +47,12 @@
 
 		<!-- Display final match -->
 		<section id="final" class="hidden">
-			<h2>Final!</h2>
+			<h2>Congratulations!</h2>
 			<section id="final-list" class="final-list"></section>
 			<button id="new-button">New Tournament</button>
 		</section>
 
-		<script type="text/javascript" src="index.js"></script>
+		<script src="index.js"></script>
 	</div> <!-- End wrapper div -->
 </body>
 </html>
