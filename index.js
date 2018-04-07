@@ -30,13 +30,29 @@ class Tournament {
 		this.players.push(newPlayer);
 	}
 
-	size() {
-		return this.players.length;
-	}
+	checkSize() {
+		let tournamentSize = this.players.length;
 
-	noLosers() {
-		// Set players to be winners if there are only two in the tournament
-		this.players.map(player => player.isWinner = true);
+		// Don't create tournament if less than two players
+		if (tournamentSize < 2) {
+			return("short");
+		}
+
+		// Go straight to the final if only 2 players
+		d.getElementById("add-players").classList.add("hidden");
+		if (tournamentSize == 2) {
+			let finalists = this.players.map(player => player.isWinner = true);
+			finalists = this.generateFinal();
+			printFinal(finalists);
+		} else {
+			this.randomisePlayers();
+
+			// Print the draw
+			draw.classList.remove("hidden");
+			this.createPairs();
+			printDraw();
+			nextRound.classList.remove("hidden");
+		}
 	}
 
 	generateFinal() {
@@ -49,31 +65,22 @@ class Tournament {
 	randomisePlayers() {
 		// Randomise the players at the beginning of each round so that byes are fairly shared
 		let randomisedPlayers = [];
-		let input = this.players.slice();
+		let input = this.players;
 		let len = input.length;
 		for (let i = 0; i < len; i += 1) {
-			console.log(i);
 			let rand = Math.floor(Math.random() * Math.floor(input.length));
 			randomisedPlayers.push(input[rand]);
 			let removed = input.splice(rand, 1);
 		}
 		this.players = randomisedPlayers;
-		console.log(this.players);
 	}
 
 	createPairs(arr) {
 		// Create the pairs for each match
 		this.pairs = [];
-		if (arr === "winners") {
-			let winners = this.players.filter(player => player.isWinner);
-			for (let i = 0; i < winners.length; i+=2) {
-				(winners[i+1]) ? this.pairs.push({player1: winners[i].name, player2: winners[i+1].name}) : this.pairs.push({player1: winners[i].name, player2: "BYE"});
-			}
-		} else {
-			// If no rounds have been played yet, use all the players
-			for (let i = 0; i < this.players.length; i+=2) {
-				(this.players[i+1]) ? this.pairs.push({player1: this.players[i].name, player2: this.players[i+1].name}) : this.pairs.push({player1: this.players[i].name, player2: "BYE"});
-			}
+		let participants = arr === "winners" ? this.players.filter(player => player.isWinner) : this.players;
+		for (let i = 0; i < participants.length; i+=2) {
+			(participants[i+1]) ? this.pairs.push({player1: participants[i].name, player2: participants[i+1].name}) : this.pairs.push({player1: participants[i].name, player2: "BYE"});
 		}
 	}
 
@@ -208,28 +215,9 @@ let addPlayerClicked = (e) => {
 // Create the initial Tournament draw
 let createTournament = () => {
 
-	// Check there are at least 2 players
-	let tournamentSize = tournament.size();
-	if (tournamentSize < 2) {
-		inputError.textContent = "Enter at least 2 players to make a tournament";
-		return;
-	}
-
-	// Go straight to the final if only 2 players
-	d.getElementById("add-players").classList.add("hidden");
-	if (tournamentSize == 2) {
-		let finalists = tournament.noLosers();
-		finalists = tournament.generateFinal();
-		printFinal(finalists);
-	} else {
-		tournament.randomisePlayers();
-
-		// Print the draw
-		draw.classList.remove("hidden");
-		tournament.createPairs();
-		printDraw();
-		nextRound.classList.remove("hidden");
-	}
+	// Check the size of the tournament
+	let status = tournament.checkSize();
+	status ? inputError.textContent = "Enter at least 2 players to make a tournament" : null;
 }
 
 // Print the matches
